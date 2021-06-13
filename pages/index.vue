@@ -21,11 +21,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in todos" :key="index">
-          <td>{{ item.content }}</td>
-          <td>{{ item.created }}</td>
-          <td><button class="button">{{ item.state }}</button></td>
-          <td><button class="button button--delete">削除</button></td>
+        <tr v-for="(todo, index) in todos" :key="index">
+          <td>{{ todo.content }}</td>
+          <td>{{ todo.created }}</td>
+          <td><button class="button">{{ todo.state }}</button></td>
+          <td><button class="button button--red" @click="remove(todo)">削除</button></td>
         </tr>
       </tbody>
     </table>
@@ -50,6 +50,9 @@ export default {
         this.$store.commit('insert', {content: this.content});
         this.content = '';
       }
+    },
+    remove: function(todo) {
+      this.$store.commit('remove', todo)
     }
   }
 }
