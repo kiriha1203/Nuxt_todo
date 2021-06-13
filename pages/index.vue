@@ -24,7 +24,16 @@
         <tr v-for="(todo, index) in todos" :key="index">
           <td>{{ todo.content }}</td>
           <td>{{ todo.created }}</td>
-          <td><button class="button">{{ todo.state }}</button></td>
+          <td>
+            <button class="button" 
+                      v-bind:class="{
+                        'button--yet':todo.state == '作業前',
+                        'button--progress':todo.state == '作業中',
+                        'button--done':todo.state == '完了'}"
+                      @click="changeState(todo)">
+                {{ todo.state }}
+            </button>
+          </td>
           <td><button class="button button--red" @click="remove(todo)">削除</button></td>
         </tr>
       </tbody>
@@ -53,6 +62,9 @@ export default {
     },
     remove: function(todo) {
       this.$store.commit('remove', todo)
+    },
+    changeState: function(todo){
+      this.$store.commit('changeState', todo)
     }
   }
 }
